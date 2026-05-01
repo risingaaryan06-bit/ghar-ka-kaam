@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "Plus Jakarta Sans", sans-serif;
+    --font-body: "Satoshi", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --radius: 0.625rem;
+
+    /* ── Baby pink, white & black palette ── */
+    --background: 0.985 0.004 350; /* near-white with faintest pink tint */
+    --foreground: 0.1 0.01 350; /* near-black */
+    --card: 1.0 0 0; /* pure white */
+    --card-foreground: 0.1 0.01 350;
+    --popover: 1.0 0 0;
+    --popover-foreground: 0.1 0.01 350;
+
+    /* Primary — soft baby pink */
+    --primary: 0.8 0.1 350;
+    --primary-foreground: 0.1 0.008 350; /* near-black on pink */
+
+    /* Secondary — rich near-black (ink) */
+    --secondary: 0.12 0.02 350;
+    --secondary-foreground: 0.97 0.005 350;
+
+    --muted: 0.95 0.018 350; /* blush white */
+    --muted-foreground: 0.5 0.04 350;
+
+    --accent: 0.93 0.045 350; /* very light blush hover */
+    --accent-foreground: 0.1 0.01 350;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.985 0.004 350;
+
+    --border: 0.9 0.03 350; /* pink-tinted border */
+    --input: 0.93 0.02 350;
+    --ring: 0.8 0.1 350;
+
+    --chart-1: 0.8 0.1 350;
+    --chart-2: 0.65 0.14 340;
+    --chart-3: 0.55 0.1 355;
+    --chart-4: 0.92 0.05 350;
+    --chart-5: 0.4 0.08 345;
+
+    --sidebar: 1.0 0 0;
+    --sidebar-foreground: 0.1 0.01 350;
+    --sidebar-primary: 0.8 0.1 350;
+    --sidebar-primary-foreground: 0.1 0.008 350;
+    --sidebar-accent: 0.93 0.045 350;
+    --sidebar-accent-foreground: 0.1 0.01 350;
+    --sidebar-border: 0.9 0.03 350;
+    --sidebar-ring: 0.8 0.1 350;
+  }
+
+  .dark {
+    --background: 0.1 0.008 350;
+    --foreground: 0.96 0.005 350;
+    --card: 0.14 0.01 350;
+    --card-foreground: 0.96 0.005 350;
+    --popover: 0.18 0.01 350;
+    --popover-foreground: 0.96 0.005 350;
+
+    --primary: 0.83 0.11 350;
+    --primary-foreground: 0.1 0.008 350;
+
+    --secondary: 0.9 0.06 350;
+    --secondary-foreground: 0.1 0.008 350;
+
+    --muted: 0.2 0.01 350;
+    --muted-foreground: 0.6 0.03 350;
+
+    --accent: 0.88 0.06 350;
+    --accent-foreground: 0.1 0.01 350;
+
+    --destructive: 0.65 0.19 22;
+    --destructive-foreground: 0.96 0.005 350;
+
+    --border: 0.22 0.01 350;
+    --input: 0.2 0.01 350;
+    --ring: 0.83 0.11 350;
+
+    --chart-1: 0.83 0.11 350;
+    --chart-2: 0.7 0.14 340;
+    --chart-3: 0.6 0.1 355;
+    --chart-4: 0.9 0.06 350;
+    --chart-5: 0.5 0.08 345;
+
+    --sidebar: 0.14 0.01 350;
+    --sidebar-foreground: 0.96 0.005 350;
+    --sidebar-primary: 0.83 0.11 350;
+    --sidebar-primary-foreground: 0.1 0.008 350;
+    --sidebar-accent: 0.88 0.06 350;
+    --sidebar-accent-foreground: 0.1 0.01 350;
+    --sidebar-border: 0.22 0.01 350;
+    --sidebar-ring: 0.83 0.11 350;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/assets/fonts/Satoshi.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer utilities {
+  /* ── Transitions ── */
+  .transition-smooth {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ── Button utilities ── */
+  .btn-primary {
+    @apply px-5 py-2.5 bg-primary text-primary-foreground font-semibold rounded-lg
+           shadow-sm transition-smooth
+           hover:bg-primary/85 hover:shadow-md
+           focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1;
+  }
+
+  .btn-secondary {
+    @apply px-5 py-2.5 bg-secondary text-secondary-foreground font-semibold rounded-lg
+           shadow-sm transition-smooth
+           hover:bg-secondary/85 hover:shadow-md
+           focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1;
+  }
+
+  .btn-outline-pink {
+    @apply px-5 py-2.5 bg-transparent text-primary border border-primary font-semibold rounded-lg
+           transition-smooth
+           hover:bg-accent hover:shadow-sm
+           focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1;
+  }
+
+  /* ── Card utilities ── */
+  .card-elevated {
+    @apply bg-card text-card-foreground rounded-xl border border-border
+           shadow-sm transition-smooth hover:shadow-md;
+  }
+
+  .card-pink {
+    @apply bg-card text-card-foreground rounded-xl border-2 border-primary/20
+           shadow-sm transition-smooth hover:border-primary/40 hover:shadow-md;
+  }
+
+  /* ── Gradient utilities ── */
+  .construction-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.8 0.1 350) 0%,
+      oklch(0.65 0.14 340) 50%,
+      oklch(0.12 0.02 350) 100%
+    );
+  }
+
+  .hero-gradient {
+    background: linear-gradient(
+      160deg,
+      oklch(0.88 0.07 350) 0%,
+      oklch(0.96 0.03 350) 50%,
+      oklch(0.99 0.01 350) 100%
+    );
+  }
+
+  .banner-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.1 0.015 350) 0%,
+      oklch(0.16 0.025 340) 100%
+    );
+  }
+
+  .pink-section {
+    background: linear-gradient(
+      180deg,
+      oklch(0.97 0.018 350) 0%,
+      oklch(0.985 0.008 350) 100%
+    );
+  }
+
+  /* ── Decorative ── */
+  .pink-dot-pattern {
+    background-image: radial-gradient(
+      circle,
+      oklch(0.8 0.1 350 / 0.12) 1px,
+      transparent 1px
+    );
+    background-size: 28px 28px;
+  }
+
+  /* ── Text ── */
+  .text-gradient-pink {
+    background: linear-gradient(
+      135deg,
+      oklch(0.8 0.1 350),
+      oklch(0.55 0.18 340)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Lift on hover ── */
+  .hover-lift {
+    @apply transition-smooth hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  /* ── Badge variants ── */
+  .badge-pink {
+    @apply bg-primary/10 text-primary border-primary/25 border text-xs font-semibold rounded-full px-2.5 py-0.5;
+  }
+
+  .badge-ink {
+    @apply bg-secondary/10 text-secondary border-secondary/20 border text-xs font-semibold rounded-full px-2.5 py-0.5;
+  }
+
+  /* ── Pink shadow ── */
+  .shadow-pink {
+    box-shadow: 0 4px 20px oklch(0.8 0.1 350 / 0.18);
+  }
+
+  .shadow-pink-lg {
+    box-shadow: 0 8px 32px oklch(0.8 0.1 350 / 0.22);
+  }
+}

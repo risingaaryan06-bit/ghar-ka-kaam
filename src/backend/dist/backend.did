@@ -1,0 +1,236 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type WorkType = 
+ variant {
+   babysitter;
+   carpentry;
+   childcare;
+   cook;
+   electrical;
+   general;
+   houseCleaner;
+   laundry;
+   maidServices;
+   masonry;
+   other;
+   painting;
+   plumbing;
+ };
+type UserRole__1 = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserRole = 
+ variant {
+   homeowner;
+   laborer;
+   maid;
+ };
+type UserProfile = 
+ record {
+   averageRating: opt float64;
+   completedJobsCount: opt nat;
+   createdAt: Timestamp;
+   id: UserId;
+   location: text;
+   maidCategory: opt text;
+   name: text;
+   phone: text;
+   role: UserRole;
+   skills: opt vec text;
+   yearsExperience: opt nat;
+ };
+type UserId = principal;
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type Timestamp = int;
+type StripeSessionStatus = 
+ variant {
+   completed: record {
+                response: text;
+                userPrincipal: opt text;
+              };
+   failed: record {error: text;};
+ };
+type StripeConfiguration = 
+ record {
+   allowedCountries: vec text;
+   secretKey: text;
+ };
+type ShoppingItem = 
+ record {
+   currency: text;
+   priceInCents: nat;
+   productDescription: text;
+   productName: text;
+   quantity: nat;
+ };
+type ReviewId = nat;
+type Review = 
+ record {
+   comment: text;
+   createdAt: Timestamp;
+   id: ReviewId;
+   jobId: JobId;
+   rating: nat;
+   revieweePrincipal: UserId;
+   reviewerPrincipal: UserId;
+ };
+type PaymentType = 
+ variant {
+   completion;
+   deposit;
+ };
+type PaymentStatus = 
+ variant {
+   paid;
+   pending;
+ };
+type PaymentId = nat;
+type Payment = 
+ record {
+   amountPaid: nat;
+   createdAt: Timestamp;
+   homeownerPrincipal: UserId;
+   id: PaymentId;
+   jobId: JobId;
+   paymentType: PaymentType;
+   status: PaymentStatus;
+   stripeSessionId: text;
+ };
+type NotificationId = nat;
+type Notification = 
+ record {
+   createdAt: Timestamp;
+   id: NotificationId;
+   messageText: text;
+   read: bool;
+   relatedJobId: opt JobId;
+   userPrincipal: UserId;
+ };
+type MessageId = nat;
+type Message = 
+ record {
+   content: text;
+   createdAt: Timestamp;
+   id: MessageId;
+   jobId: JobId;
+   senderPrincipal: UserId;
+ };
+type JobStatus = 
+ variant {
+   assigned;
+   cancelled;
+   completed;
+   open;
+ };
+type JobId = nat;
+type Job = 
+ record {
+   assignedWorker: opt UserId;
+   budget: nat;
+   createdAt: Timestamp;
+   description: text;
+   id: JobId;
+   imageUrls: vec ExternalBlob;
+   location: text;
+   posterPrincipal: UserId;
+   requiredMaterials: opt text;
+   status: JobStatus;
+   timelineDays: nat;
+   title: text;
+   workType: WorkType;
+ };
+type ExternalBlob = blob;
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  assignCallerUserRole: (user: principal, role: UserRole__1) -> ();
+  assignWorker: (jobId: nat, workerPrincipal: principal) -> ();
+  cancelJob: (jobId: nat) -> ();
+  completeJob: (jobId: nat) -> ();
+  confirmPayment: (stripeSessionId: text) -> ();
+  createCheckoutSession: (items: vec ShoppingItem, successUrl: text,
+   cancelUrl: text) -> (text);
+  createReview: (revieweePrincipal: principal, jobId: nat, rating: nat,
+   comment: text) -> (Review);
+  createUserProfile: (name: text, phone: text, location: text, role:
+   UserRole) -> (UserProfile);
+  filterJobs: (location: opt text, workType: opt WorkType, maxBudget:
+   opt nat) -> (vec Job) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole__1) query;
+  getJob: (jobId: nat) -> (opt Job) query;
+  getMessagesForJob: (jobId: nat) -> (vec Message) query;
+  getMyNotifications: () -> (vec Notification) query;
+  getMyPostedJobs: () -> (vec Job) query;
+  getPaymentsForJob: (jobId: nat) -> (vec Payment) query;
+  getPlatformStats: () ->
+   (record {
+      totalCompletedJobs: nat;
+      totalJobs: nat;
+      totalWorkers: nat;
+    }) query;
+  getReviewsForJob: (jobId: nat) -> (vec Review) query;
+  getReviewsForUser: (userId: principal) -> (vec Review) query;
+  getStripeSessionStatus: (sessionId: text) -> (StripeSessionStatus);
+  getUserProfile: (userId: principal) -> (opt UserProfile) query;
+  isCallerAdmin: () -> (bool) query;
+  isStripeConfigured: () -> (bool) query;
+  listJobs: () -> (vec Job) query;
+  listMaids: () -> (vec UserProfile) query;
+  listWorkers: () -> (vec UserProfile) query;
+  markAllNotificationsRead: () -> ();
+  markNotificationRead: (notificationId: nat) -> ();
+  postJob: (title: text, description: text, workType: WorkType, location:
+   text, budget: nat, timelineDays: nat, requiredMaterials: opt text,
+   imageUrls: vec ExternalBlob) -> (Job);
+  recordPayment: (jobId: nat, amountPaid: nat, paymentType: PaymentType,
+   stripeSessionId: text) -> (Payment);
+  saveCallerUserProfile: (profile: UserProfile) -> ();
+  sendMessage: (jobId: nat, content: text) -> (Message);
+  setStripeConfiguration: (config: StripeConfiguration) -> ();
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+  updateUserProfile: (name: text, phone: text, location: text) -> ();
+}

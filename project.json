@@ -1,0 +1,24 @@
+{
+  "overview": "Ghar Ka Kaam is a modern home services marketplace connecting homeowners with skilled construction laborers and domestic maid services. Homeowners can post jobs, browse worker profiles, and directly hire maids (cooks, cleaners, childcare, laundry) — all with secure messaging and milestone payments.",
+  "features": [
+    "Browse and hire skilled construction workers (masons, carpenters, painters, electricians, plumbers)",
+    "Dedicated Maid Services section — browse cooks, house cleaners, laundry, childcare, and babysitters",
+    "Direct hire model — no bidding, just browse profiles and message to book",
+    "Job posting for homeowners with simple form (work type, location, budget, timeline)",
+    "Stripe-powered milestone payments — 50% upfront, 50% on completion",
+    "Thread-based messaging between homeowners and workers/maids",
+    "Ratings and reviews after job completion",
+    "Mobile-first responsive design with construction-themed colors"
+  ],
+  "category": "marketplace",
+  "tags": [
+    "home-services",
+    "labor-marketplace",
+    "maid-services",
+    "construction-workers",
+    "hire-workers",
+    "pakistan",
+    "domestic-services"
+  ],
+  "last_updated": "2026-04-28T05:29:14.607Z"
+}
