@@ -334,7 +334,7 @@ export function Layout({ children }: LayoutProps) {
               <h4 className="font-display font-bold text-primary text-xs mb-4 uppercase tracking-widest">
                 Contact Us
               </h4>
-              <div className="grid sm:grid-cols-1 gap-4">
+              <div className="grid gap-3">
                 {[
                   {
                     label: "Contact Person",

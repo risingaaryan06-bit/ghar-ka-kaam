@@ -108,11 +108,7 @@ const contactRoute = createRoute({
 const postJobRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/post-job",
-  component: () => (
-    <ProtectedRoute>
-      <PostJobPage />
-    </ProtectedRoute>
-  ),
+  component: PostJobPage,
 });
 
 const dashboardRoute = createRoute({

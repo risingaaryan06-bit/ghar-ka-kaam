@@ -29,7 +29,7 @@ const CONTACTS = [
     title: "Contact Person",
     name: "Aaryan Kathuga",
     phone: "8894186675",
-    desc: "For all queries, support, payments, and issues related to the platform.",
+    desc: "For all queries, support, payment issues, and complaints — reach out directly.",
     gradientClass: "construction-gradient",
     badgeClass: "border-primary text-primary",
   },
@@ -170,7 +170,7 @@ export default function ContactPage() {
       {/* ── Contact Cards ── */}
       <section className="bg-card border-b border-border py-14">
         <div className="container mx-auto px-4">
-          <div className="grid sm:grid-cols-1 gap-6 max-w-sm mx-auto">
+          <div className="grid gap-6 max-w-sm mx-auto">
             {CONTACTS.map((c, i) => {
               const Icon = c.icon;
               return (
